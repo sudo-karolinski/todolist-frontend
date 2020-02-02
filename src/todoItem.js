@@ -1,15 +1,15 @@
 // @flow
 import React from 'react';
-// import type { Key } from 'react';
-// import type { Todo } from './todos';
+import type { Todo } from './todos';
+import './TodoItem.scss';
 
-//type Props = Todo & Key;
+type Props = Todo;
 
-function TodoItem(props: any) {
+function TodoItem(props: Props) {
   const { description } = props;
 
   return (
-    <div className="todo">
+    <div className="todoItem">
       <h1> {description} </h1>
     </div>
   );

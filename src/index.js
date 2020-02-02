@@ -5,13 +5,16 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { todos } from './reducers';
+import { todos, showModal, showDrawer, selectedTodo } from './reducers';
 import rootSaga from './sagas';
 import { reducer as form } from 'redux-form';
 
 const rootReducers = combineReducers({
   todos,
-  form
+  form,
+  showModal,
+  showDrawer,
+  selectedTodo
 });
 
 const sagaMiddleware = createSagaMiddleware();

@@ -1,47 +1,142 @@
 // @flow
 import React, { Component } from 'react';
+import { Modal } from '@material-ui/core';
 import './App.scss';
+import './Modal.scss';
 import type { Todo } from './todos';
 import GridList from '@material-ui/core/GridList';
+import { SwipeableDrawer } from '@material-ui/core';
 import GridListTile from '@material-ui/core/GridListTile';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import TodoItem from './todoItem';
+import AddTodoForm from './AddTodoForm';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import {
+  addTodoSuccessAction,
+  toggleModalRequestedAction,
+  toggleDrawerRequestedAction,
+  selectTodoRequestedAction,
+  updateTodoSuccessAction,
+  deleteTodoSuccessAction
+} from './actions';
 
 //import type { MapStateToProps, MapDispatchToProps } from 'react-redux';
 
 type Props = {
-  todos: Array<Todo>
+  todos: Array<Todo>,
+  selectedTodo: Todo,
+  showModal: boolean,
+  showDrawer: boolean,
+  updateTodo: any,
+  addTodo: any,
+  deleteTodo: any,
+  toggleModal: any,
+  toggleDrawer: any
 };
 
 class App extends Component<Props> {
   render() {
-    const { todos } = this.props;
+    const {
+      todos,
+      addTodo,
+      updateTodo,
+      showModal,
+      toggleModal,
+      showDrawer,
+      toggleDrawer,
+      selectedTodo,
+      deleteTodo
+    } = this.props;
+
+    const modalContent = showDrawer ? (
+      <AddTodoForm onSubmit={updateTodo} />
+    ) : (
+      <AddTodoForm onSubmit={addTodo} />
+    );
 
     return (
-      <Container>
-        <GridList cellHeight={160} cols={3}>
-          {todos.map((todo: Todo, index) => {
-            const { description, id, status } = todo;
-            return (
-              <GridListTile key={index} cols={1}>
-                <TodoItem
+      <>
+        <Container>
+          <GridList cellHeight={160} cols={3}>
+            {todos.map((todo: Todo, index) => {
+              const { description, id, done } = todo;
+              return (
+                <GridListTile
+                  onClick={toggleDrawer.bind(null, todo)}
                   key={index}
-                  status={status}
-                  description={description}
-                  id={id}
-                />
-              </GridListTile>
-            );
-          })}
-        </GridList>
-      </Container>
+                  cols={1}
+                >
+                  <TodoItem
+                    key={index}
+                    done={done}
+                    description={description}
+                    id={id}
+                  />
+                </GridListTile>
+              );
+            })}
+          </GridList>
+          <button onClick={toggleModal}>toggle</button>
+        </Container>
+        <Modal open={showModal} onClose={toggleModal}>
+          {/* <Paper>
+            <Container>
+              <AddTodoForm onSubmit={addTodo} />
+            </Container>
+          </Paper> */}
+          <div className="modalContent">{modalContent}</div>
+        </Modal>
+        <SwipeableDrawer
+          open={showDrawer}
+          onClose={toggleDrawer.bind(null, {})}
+        >
+          <List>
+            <ListItem button onClick={toggleModal}>
+              <ListItemText primary={'Update selected todo'} />
+            </ListItem>
+            <ListItem button>
+              <ListItemText
+                onClick={deleteTodo.bind(null, selectedTodo)}
+                primary={'Remove selected todo'}
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemText primary={'Mark selected as Done/Undone'} />
+            </ListItem>
+          </List>
+        </SwipeableDrawer>
+      </>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  todos: state.todos
+  todos: state.todos,
+  showModal: state.showModal,
+  showDrawer: state.showDrawer,
+  selectedTodo: state.selectedTodo
 });
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => ({
+  addTodo: todo => {
+    dispatch(addTodoSuccessAction(todo));
+  },
+  deleteTodo: todo => {
+    dispatch(deleteTodoSuccessAction(todo));
+  },
+  toggleModal: () => {
+    dispatch(toggleModalRequestedAction());
+  },
+  toggleDrawer: (todo: Todo) => {
+    dispatch(selectTodoRequestedAction(todo));
+    dispatch(toggleDrawerRequestedAction());
+  },
+  updateTodo: (todo: Todo) => {
+    dispatch(updateTodoSuccessAction(todo));
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);
