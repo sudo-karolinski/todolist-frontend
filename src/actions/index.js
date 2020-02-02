@@ -5,6 +5,8 @@ import {
   UPDATE_TODO_SUCCESS,
   DELETE_TODO_REQUESTED,
   DELETE_TODO_SUCCESS,
+  FETCH_TODOS_SUCCESS,
+  FETCH_TODOS_REQUESTED,
   ADD_TODO_SUCCESS,
   TOGGLE_MODAL_REQUESTED,
   TOGGLE_DRAWER_REQUESTED,
@@ -15,6 +17,19 @@ import type { Todo } from '../todos';
 export function addTodoSuccessAction(payload: Todo) {
   return {
     type: ADD_TODO_SUCCESS,
+    payload
+  };
+}
+
+export function fetchTodosRequestedAction() {
+  return {
+    type: FETCH_TODOS_REQUESTED
+  };
+}
+
+export function fetchTodosSuccessAction(payload: Todo) {
+  return {
+    type: FETCH_TODOS_SUCCESS,
     payload
   };
 }

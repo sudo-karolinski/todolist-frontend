@@ -16,12 +16,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import {
-  addTodoSuccessAction,
+  addTodoRequestedAction,
   toggleModalRequestedAction,
   toggleDrawerRequestedAction,
   selectTodoRequestedAction,
-  updateTodoSuccessAction,
-  deleteTodoSuccessAction
+  updateTodoRequestedAction,
+  deleteTodoRequestedAction,
+  fetchTodosRequestedAction
 } from './actions';
 
 //import type { MapStateToProps, MapDispatchToProps } from 'react-redux';
@@ -35,7 +36,8 @@ type Props = {
   addTodo: any,
   deleteTodo: any,
   toggleModal: any,
-  toggleDrawer: any
+  toggleDrawer: any,
+  fetchTodos: any
 };
 
 class App extends Component<Props> {
@@ -112,6 +114,11 @@ class App extends Component<Props> {
       </>
     );
   }
+
+  componentDidMount() {
+    console.log('mounted');
+    this.props.fetchTodos();
+  }
 }
 
 const mapStateToProps = state => ({
@@ -123,10 +130,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addTodo: todo => {
-    dispatch(addTodoSuccessAction(todo));
+    dispatch(addTodoRequestedAction(todo));
   },
   deleteTodo: todo => {
-    dispatch(deleteTodoSuccessAction(todo));
+    dispatch(deleteTodoRequestedAction(todo));
   },
   toggleModal: () => {
     dispatch(toggleModalRequestedAction());
@@ -136,7 +143,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(toggleDrawerRequestedAction());
   },
   updateTodo: (todo: Todo) => {
-    dispatch(updateTodoSuccessAction(todo));
+    dispatch(updateTodoRequestedAction(todo));
+  },
+  fetchTodos: () => {
+    dispatch(fetchTodosRequestedAction());
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

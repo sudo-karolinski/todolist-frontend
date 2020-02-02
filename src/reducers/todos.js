@@ -1,6 +1,5 @@
 // @flow
 import type { Todo } from '../todos';
-import todosInit from '../todos';
 import {
   FETCH_TODOS_SUCCESS,
   UPDATE_TODO_SUCCESS,
@@ -24,15 +23,11 @@ export interface Action<Type, Payload> {
   payload: Payload;
 }
 
-const todos = (
-  state: State = todosInit,
-  action: Action<TodosAction, any>
-): State => {
+const todos = (state: State = [], action: Action<TodosAction, any>): State => {
   switch (action.type) {
     case FETCH_TODOS_SUCCESS:
-      return [...state];
+      return [...action.payload];
     case UPDATE_TODO_SUCCESS:
-      console.log(action);
       return state.map(todo => {
         if (action.payload.id === todo.id) {
           return { ...action.payload };

@@ -1,9 +1,10 @@
 // @flow
+import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { todos, showModal, showDrawer, selectedTodo } from './reducers';
 import rootSaga from './sagas';
@@ -17,15 +18,15 @@ const rootReducers = combineReducers({
   selectedTodo
 });
 
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(
-  rootReducers,
-  compose(
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(sagaMiddleware)
-  )
-);
+
+const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
+const store = createStore(rootReducers, enhancer);
 
 sagaMiddleware.run(rootSaga);
 
