@@ -1,0 +1,30 @@
+{
+    "plugins": [
+      "react",
+      "flowtype",
+      "standard",
+      "prettier",
+      "jsx-a11y"
+    ],
+    "extends": [
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended",
+      "plugin:flowtype/recommended",
+      "plugin:prettier/recommended",
+      "prettier",
+      "prettier/babel",
+      "prettier/react",
+      "prettier/flowtype",
+      "prettier/standard",
+      "eslint:recommended"
+    ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": ["error", {}, {
+        "usePrettierrc": true
+      }]
+    }
+}
