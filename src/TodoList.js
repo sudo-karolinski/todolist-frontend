@@ -21,7 +21,7 @@ class TodoList extends Component<Props> {
     const { todos, toggleDrawer } = this.props;
     return (
       <>
-        <GridList cellHeight={160} cols={3}>
+        <GridList cellHeight={'auto'} cols={3}>
           {todos.map((todo: Todo, index) => {
             const { description, id, done, title } = todo;
             return (

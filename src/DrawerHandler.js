@@ -11,7 +11,8 @@ import {
   deleteTodoRequestedAction,
   toggleModalRequestedAction,
   selectTodoRequestedAction,
-  toggleDrawerRequestedAction
+  toggleDrawerRequestedAction,
+  updateTodoRequestedAction
 } from './actions';
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   toggleDrawer: (todo: Todo) => void,
   toggleModal: () => void,
   deleteTodo: (todo: Todo) => void,
+  updateTodo: (todo: Todo) => void,
   selectedTodo: Todo
 };
 
@@ -29,7 +31,8 @@ class DrawerHandler extends Component<Props> {
       deleteTodo,
       selectedTodo,
       toggleDrawer,
-      toggleModal
+      toggleModal,
+      updateTodo
     } = this.props;
 
     return (
@@ -51,7 +54,13 @@ class DrawerHandler extends Component<Props> {
             </ListItem>
             <Divider />
             <ListItem button>
-              <ListItemText primary={'Mark selected as Done/Undone'} />
+              <ListItemText
+                primary={'Mark selected as Done/Undone'}
+                onClick={updateTodo.bind(null, {
+                  ...selectedTodo,
+                  done: !selectedTodo.done
+                })}
+              />
             </ListItem>
           </List>
         </SwipeableDrawer>
@@ -70,6 +79,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   deleteTodo: todo => {
     dispatch(deleteTodoRequestedAction(todo));
+  },
+  updateTodo: todo => {
+    dispatch(updateTodoRequestedAction(todo));
+    dispatch(toggleDrawerRequestedAction());
   },
   toggleModal: () => {
     dispatch(toggleModalRequestedAction());

@@ -2,15 +2,14 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TodoForm from './TodoForm';
 import {
   updateTodoRequestedAction,
   addTodoRequestedAction,
   toggleModalRequestedAction
 } from './actions';
-import { Modal, Container } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import type { Todo } from './types';
-import './Modal.scss';
+import ModalContent from './ModalContent';
 
 type Props = {
   addTodo: (todo: Todo) => void,
@@ -31,17 +30,15 @@ class ModalHandler extends Component<Props> {
     } = this.props;
 
     const modalContent = showDrawer ? (
-      <TodoForm onSubmit={updateTodo} />
+      <ModalContent onSubmit={updateTodo} title={'Update selected todo'} />
     ) : (
-      <TodoForm onSubmit={addTodo} />
+      <ModalContent onSubmit={addTodo} title={'Add new todo'} />
     );
 
     return (
       <>
         <Modal open={showModal} onClose={toggleModal}>
-          <Container>
-            <div className="modalContent">{modalContent}</div>
-          </Container>
+          {modalContent}
         </Modal>
       </>
     );
@@ -56,9 +53,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addTodo: (todo: Todo) => {
     dispatch(addTodoRequestedAction(todo));
+    dispatch(toggleModalRequestedAction());
   },
   updateTodo: (todo: Todo) => {
     dispatch(updateTodoRequestedAction(todo));
+    dispatch(toggleModalRequestedAction());
   },
   toggleModal: () => {
     dispatch(toggleModalRequestedAction());
