@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Modal } from '@material-ui/core';
 import './App.scss';
 import './Modal.scss';
-import type { Todo } from './todos';
+import type { Todo } from './types';
 import GridList from '@material-ui/core/GridList';
 import { SwipeableDrawer } from '@material-ui/core';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -85,11 +85,6 @@ class App extends Component<Props> {
           <button onClick={toggleModal}>toggle</button>
         </Container>
         <Modal open={showModal} onClose={toggleModal}>
-          {/* <Paper>
-            <Container>
-              <AddTodoForm onSubmit={addTodo} />
-            </Container>
-          </Paper> */}
           <div className="modalContent">{modalContent}</div>
         </Modal>
         <SwipeableDrawer
@@ -116,7 +111,6 @@ class App extends Component<Props> {
   }
 
   componentDidMount() {
-    console.log('mounted');
     this.props.fetchTodos();
   }
 }

@@ -1,5 +1,5 @@
 // @flow
-import type { Todo } from '../todos';
+import type { Todo, Action } from '../types';
 import {
   FETCH_TODOS_SUCCESS,
   UPDATE_TODO_SUCCESS,
@@ -7,23 +7,14 @@ import {
   ADD_TODO_SUCCESS
 } from '../constants';
 
+import type { TodosActionTypes } from '../actions/todos';
+
 type State = Array<Todo>;
 
-const todosActions = {
-  FETCH_TODOS_SUCCESS,
-  UPDATE_TODO_SUCCESS,
-  DELETE_TODO_SUCCESS,
-  ADD_TODO_SUCCESS
-};
-
-export type TodosAction = $Keys<typeof todosActions>;
-
-export interface Action<Type, Payload> {
-  type: Type;
-  payload: Payload;
-}
-
-const todos = (state: State = [], action: Action<TodosAction, any>): State => {
+const todos = (
+  state: State = [],
+  action: Action<TodosActionTypes, any>
+): State => {
   switch (action.type) {
     case FETCH_TODOS_SUCCESS:
       return [...action.payload];

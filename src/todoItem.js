@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import type { Todo } from './todos';
+import type { Todo } from './types';
 import './TodoItem.scss';
 
 type Props = Todo;

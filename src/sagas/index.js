@@ -1,4 +1,7 @@
+// @flow
+
 import { takeEvery, all } from '@redux-saga/core/effects';
+import type { Saga } from '@redux-saga/core/effects';
 import {
   FETCH_TODOS_REQUESTED,
   DELETE_TODO_REQUESTED,
@@ -7,7 +10,7 @@ import {
 } from '../constants';
 import { fetchTodos, deleteTodo, updateTodo, addTodo } from './todos';
 
-export default function* rootSaga() {
+export default function* watchAll(): Saga<void> {
   yield all([
     takeEvery(FETCH_TODOS_REQUESTED, fetchTodos),
     takeEvery(DELETE_TODO_REQUESTED, deleteTodo),

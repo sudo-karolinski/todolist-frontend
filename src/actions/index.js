@@ -1,89 +1,28 @@
 // @flow
+import { selectTodoRequestedAction } from './selectedTodo';
+import { toggleDrawerRequestedAction } from './showDrawer';
+import { toggleModalRequestedAction } from './showModal';
 import {
-  ADD_TODO_REQUESTED,
-  UPDATE_TODO_REQUESTED,
-  UPDATE_TODO_SUCCESS,
-  DELETE_TODO_REQUESTED,
-  DELETE_TODO_SUCCESS,
-  FETCH_TODOS_SUCCESS,
-  FETCH_TODOS_REQUESTED,
-  ADD_TODO_SUCCESS,
-  TOGGLE_MODAL_REQUESTED,
-  TOGGLE_DRAWER_REQUESTED,
-  SELECT_TODO_REQUESTED
-} from '../constants';
-import type { Todo } from '../todos';
+  addTodoSuccessAction,
+  fetchTodosRequestedAction,
+  fetchTodosSuccessAction,
+  updateTodoSuccessAction,
+  updateTodoRequestedAction,
+  deleteTodoSuccessAction,
+  deleteTodoRequestedAction,
+  addTodoRequestedAction
+} from './todos';
 
-export function addTodoSuccessAction(payload: Todo) {
-  return {
-    type: ADD_TODO_SUCCESS,
-    payload
-  };
-}
-
-export function fetchTodosRequestedAction() {
-  return {
-    type: FETCH_TODOS_REQUESTED
-  };
-}
-
-export function fetchTodosSuccessAction(payload: Todo) {
-  return {
-    type: FETCH_TODOS_SUCCESS,
-    payload
-  };
-}
-
-export function updateTodoSuccessAction(payload: Todo) {
-  return {
-    type: UPDATE_TODO_SUCCESS,
-    payload
-  };
-}
-
-export function updateTodoRequestedAction(payload: Todo) {
-  return {
-    type: UPDATE_TODO_REQUESTED,
-    payload
-  };
-}
-
-export function deleteTodoSuccessAction(payload: Todo) {
-  return {
-    type: DELETE_TODO_SUCCESS,
-    payload
-  };
-}
-
-export function deleteTodoRequestedAction(payload: Todo) {
-  return {
-    type: DELETE_TODO_REQUESTED,
-    payload
-  };
-}
-
-export function addTodoRequestedAction(payload: Todo) {
-  return {
-    type: ADD_TODO_REQUESTED,
-    payload
-  };
-}
-
-export function toggleModalRequestedAction() {
-  return {
-    type: TOGGLE_MODAL_REQUESTED
-  };
-}
-
-export function toggleDrawerRequestedAction() {
-  return {
-    type: TOGGLE_DRAWER_REQUESTED
-  };
-}
-
-export function selectTodoRequestedAction(payload: Todo) {
-  return {
-    type: SELECT_TODO_REQUESTED,
-    payload
-  };
-}
+export {
+  selectTodoRequestedAction,
+  toggleDrawerRequestedAction,
+  toggleModalRequestedAction,
+  addTodoSuccessAction,
+  fetchTodosRequestedAction,
+  fetchTodosSuccessAction,
+  updateTodoSuccessAction,
+  updateTodoRequestedAction,
+  deleteTodoSuccessAction,
+  deleteTodoRequestedAction,
+  addTodoRequestedAction
+};
