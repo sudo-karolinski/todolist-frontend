@@ -2,6 +2,7 @@
 export type Todo = {
   id: number,
   description: string,
+  title: string,
   done: boolean
 };
 

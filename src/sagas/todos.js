@@ -9,7 +9,14 @@ import {
   addTodoSuccessAction,
   toggleDrawerRequestedAction
 } from '../actions';
-import type { Todo } from '../todos';
+
+import {
+  ADD_TODO_REQUESTED,
+  DELETE_TODO_REQUESTED,
+  UPDATE_TODO_REQUESTED
+} from '../constants';
+import type { Todo, Action } from '../types';
+import type { Saga } from '@redux-saga/core/effects';
 
 const headers = {
   'Content-Type': 'application/json'
@@ -17,7 +24,7 @@ const headers = {
 
 const url = '/api/todos';
 
-export function* fetchTodos() {
+export function* fetchTodos(): Saga<void> {
   try {
     const response = yield call(axios.get, url, { headers });
     yield put(fetchTodosSuccessAction(response.data));
@@ -26,7 +33,9 @@ export function* fetchTodos() {
   }
 }
 
-export function* updateTodo(action) {
+export function* updateTodo(
+  action: Action<typeof UPDATE_TODO_REQUESTED, Todo>
+): Saga<void> {
   try {
     const { payload } = action;
     const { id } = payload;
@@ -39,21 +48,26 @@ export function* updateTodo(action) {
   }
 }
 
-export function* deleteTodo(action) {
+export function* deleteTodo(
+  action: Action<typeof DELETE_TODO_REQUESTED, Todo>
+): Saga<void> {
   try {
     const { payload } = action;
     const { id } = payload;
     yield call(axios.delete, `${url}/${id}`, { headers });
     yield put(deleteTodoSuccessAction(payload));
-    yield put(toggleDrawerRequestedAction({}));
+    yield put(toggleDrawerRequestedAction());
   } catch (error) {
     console.log(error);
   }
 }
 
-export function* addTodo(action) {
+export function* addTodo(
+  action: Action<typeof ADD_TODO_REQUESTED, Todo>
+): Saga<void> {
   try {
     const { payload } = action;
+    payload.done = false;
     const response = yield call(axios.post, url, payload, {
       headers
     });

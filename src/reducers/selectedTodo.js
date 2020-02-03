@@ -10,7 +10,7 @@ type State = Todo;
 const selectedTodo = (
   state: State = {},
   action: Action<SelectedTodoActionTypes, Todo>
-) => {
+): Todo => {
   switch (action.type) {
     case SELECT_TODO_REQUESTED:
       return { ...action.payload };

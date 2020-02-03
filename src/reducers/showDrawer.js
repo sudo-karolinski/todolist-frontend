@@ -8,7 +8,7 @@ type State = boolean;
 const showDrawer = (
   state: State = false,
   action: Action<ShowDrawerActionTypes, boolean>
-) => {
+): boolean => {
   switch (action.type) {
     case TOGGLE_DRAWER_REQUESTED:
       return !state;
